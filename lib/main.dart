@@ -1,9 +1,10 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:orcamento/models/object.dart';
-
 import 'other/Chart.dart';
+import 'other/ObjectForm.dart';
+import 'other/ObjectList.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -71,7 +72,7 @@ class _HomeState extends State<HomePage>{
       date: DateTime.now().subtract(Duration(days: 3))
     ),
   ];
-  bool _showChhart = false;
+  bool _showChart = false;
   
   List<Object> get _recentObjects {
     return this._object.where((object) {
@@ -105,7 +106,7 @@ class _HomeState extends State<HomePage>{
     showModalBottomSheet(
         context: context,
         builder: (_) {
-          return ObjectFrom(this._addObject);
+          return ObjectForm(this._addObject);
         });
   }
 
@@ -136,21 +137,21 @@ class _HomeState extends State<HomePage>{
               children: <Widget>[
                 Text('Mostrar Gráfico'),
                 Switch(
-                  value: this._showChhart,
+                  value: this._showChart,
                   onChanged: (value) {
                     setState(() {
-                      this._showChhart = value;
+                      this._showChart = value;
                     });
                   },
                 ),
               ],
             ),
-            if(this._showChhart)
+            if(this._showChart)
               Container(
                 height: availableHeigth * 0.3,
                 child: Chart(this._recentObjects),
               ),
-            if(!this._showChhart)
+            if(!this._showChart)
               Container(
                 height:  availableHeigth * 0.7,
                 child: ObjectList(
